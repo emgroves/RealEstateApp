@@ -1,0 +1,45 @@
+@using RealEstateApp.Models  
+@model RealEstateApp.Models.Listing  
+
+@{
+    ViewData["Title"] = "Listing Details ";
+}
+
+<h2>Listing Details</h2>
+
+<body>  
+    <div>  
+        <b>Listing Id:</b>@Model.Id<br>  
+        <b>Address:</b>
+        <div id="address" contenteditable="true" style="display:inline-block; width:500px;">
+            @Model.Address
+        </div><br>   
+        <b>Description:</b>
+        <div id="description" contenteditable="true" style="display:inline-block; width:500px;">
+            @Model.Description
+        </div><br>  
+        <b>Price:</b>
+        <div id="price" contenteditable="true" style="display:inline-block; width:150px;">
+            @Model.Price
+        </div><br>  
+        <button type=button onclick='SubmitChanges()'>Submit</button>
+    </div>
+</body>
+
+<script type='text/javascript'>
+    function SubmitChanges() {
+        var address = $('#address').val();
+        var description = $('#description').val();
+        var price = $('#price').val();
+
+        $.ajax({
+            url: string.Format("/listings/{0}/details/update", @Model.Id),
+            data: { 
+                address : address,
+                description : description,
+                price : price,
+            },
+            type: 'PUT',
+        });
+    }
+</script>

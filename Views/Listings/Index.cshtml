@@ -1,0 +1,66 @@
+@using RealEstateApp.Models
+@model RealEstateApp.Models.ListingsViewModel  
+
+@{
+    ViewData["Title"] = "Listings View";
+}
+
+<h2>View All Listings</h2>
+
+<table border="1">
+    <tr>
+        <td>Id</td>
+        <td>Address</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>CreatedAt</td>
+    </tr>
+    @foreach (var listing in Model.Listings)
+    { 
+        <tr>
+            <td>@listing.Id</td>
+            <td><href="/"+@listing.Id+"/details">@listing.Address</href></td>
+            <td>@listing.Description</td>
+            <td>@listing.Price</td>
+            <td>@listing.CreatedAt</td>
+            <td><a href='@string.Format("/listings/{0}/details", @listing.Id)'>View Details</a></td>
+        </tr>
+    }
+</table>
+
+<div style="padding-top:20px;">
+    <button type=button onclick='ShowAddListing()'>Create Listing</button>
+    <div id="create-listing" style="display:none">
+        <form>
+            Address:<br>
+            <input type="text" id="address"><br>
+            Description:<br>
+            <input type="text" id="description"><br>
+            Price:<br>
+            <input type="text" id="price">
+        </form>
+        <button type=button onclick='SubmitListing()'>Submit</button>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    function ShowAddListing() {
+        $('#create-listing').show();
+    }
+
+    function SubmitListing() {
+        var address = $('#address').val();
+        var description = $('#description').val();
+        var price = $('#price').val();
+
+        $.ajax({
+            url: '/listings',
+            data: { 
+                address : address,
+                description : description,
+                price : price,
+            },
+            type: 'POST',
+        });
+    }
+</script>
