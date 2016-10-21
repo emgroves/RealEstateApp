@@ -12,7 +12,7 @@ using RealEstateApp.Services;
 
 namespace RealEstateApp.Controllers
 {
-    [Route("Listings")]
+    [Route("listings")]
     public class ListingsController : Controller
     {
         private IListingService _listingService;
@@ -23,7 +23,6 @@ namespace RealEstateApp.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine("HERE IN LISTINGS CONTROLLER");
             var listings = _listingService.GetAllListings();
             return View(new ListingsViewModel { Listings = listings });
         }
@@ -70,6 +69,8 @@ namespace RealEstateApp.Controllers
         [HttpPut("{id}/details/update")]
         public IActionResult Update(string id, string address, string description, string price)
         {
+            Console.WriteLine("id: " + id + " address " + address );
+
             var listing = new Listing {
                 Id = Convert.ToInt32(id),
                 Address = address,

@@ -58,8 +58,9 @@ namespace RealEstateApp.Services
             using (var db = new ListingContext())
             {
                 var toUpdate = db.Listings.FirstOrDefault(l => l.Id == item.Id);
-                Console.WriteLine("Updating Item with Id:"+item.Id+" to have Listing Address:"+item.Address);
-                db.Listings.Update(toUpdate);         
+                toUpdate.Address = item.Address;
+                toUpdate.Description = item.Description;
+                toUpdate.Price = item.Price;
                 db.SaveChanges();
             }
         }

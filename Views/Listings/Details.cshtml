@@ -28,12 +28,12 @@
 
 <script type='text/javascript'>
     function SubmitChanges() {
-        var address = $('#address').val();
-        var description = $('#description').val();
-        var price = $('#price').val();
+        var address = $('#address').text();
+        var description = $('#description').text();
+        var price = $('#price').text();
 
         $.ajax({
-            url: string.Format("/listings/{0}/details/update", @Model.Id),
+            url: '@string.Format("/listings/{0}/details/update", @Model.Id)',
             data: { 
                 address : address,
                 description : description,
