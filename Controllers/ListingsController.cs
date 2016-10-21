@@ -54,7 +54,7 @@ namespace RealEstateApp.Controllers
             return new JsonResult(new {success = true});
         }
 
-        [HttpPost("{id}/details/delete")]
+        [HttpDelete("{id}/details/delete")]
         public IActionResult Delete(string id)
         {
             var item = _listingService.Remove(id);

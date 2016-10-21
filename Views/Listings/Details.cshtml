@@ -23,6 +23,7 @@
             @Model.Price
         </div><br>  
         <button type=button onclick='SubmitChanges()'>Submit</button>
+        <button type=button onclick='DeleteListing()'>Delete</button>
     </div>
 </body>
 
@@ -41,5 +42,14 @@
             },
             type: 'PUT',
         });
+    }
+
+    function DeleteListing() {
+        $.ajax({
+            url: '@string.Format("/listings/{0}/details/delete", @Model.Id)',
+            type: 'DELETE',
+        });
+
+        window.location.href = '/listings';
     }
 </script>
