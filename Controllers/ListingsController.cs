@@ -16,14 +16,23 @@ namespace RealEstateApp.Controllers
     public class ListingsController : Controller
     {
         private IListingService _listingService;
-        public ListingsController(IListingService listingService) 
+        public ListingsController(IListingService listingService)
         {
             _listingService = listingService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchQuery)
         {
             var listings = _listingService.GetAllListings();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                listings = listings.Where(l => l.Address.Contains(searchQuery) ||
+                                            l.Description.Contains(searchQuery) ||
+                                            l.Price.ToString().Contains(searchQuery))
+                                   .ToList();
+            }
+
             return View(new ListingsViewModel { Listings = listings });
         }
 
@@ -39,8 +48,8 @@ namespace RealEstateApp.Controllers
             return new ObjectResult(item);
         }
 
-        [HttpPost("")] 
-        public IActionResult Post(string address, string description, string price) 
+        [HttpPost("/create")]
+        public IActionResult Post(string address, string description, string price)
         {
             var listing = new Listing {
                 Address = address,

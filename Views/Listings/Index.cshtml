@@ -1,11 +1,19 @@
 @using RealEstateApp.Models
-@model RealEstateApp.Models.ListingsViewModel  
+@model RealEstateApp.Models.ListingsViewModel
 
 @{
     ViewData["Title"] = "Listings View";
 }
 
 <h2>View All Listings</h2>
+
+<form asp-controller="Listings" asp-action="Index">
+    <p>
+        Title: <input type="text" name="SearchQuery">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 
 <table border="1">
     <tr>
@@ -16,7 +24,7 @@
         <td>CreatedAt</td>
     </tr>
     @foreach (var listing in Model.Listings)
-    { 
+    {
         <tr>
             <td>@listing.Id</td>
             <td><href="/"+@listing.Id+"/details">@listing.Address</href></td>
@@ -54,8 +62,8 @@
         var price = $('#price').val();
 
         $.ajax({
-            url: '/listings',
-            data: { 
+            url: '/listings/create',
+            data: {
                 address : address,
                 description : description,
                 price : price,
